@@ -1,0 +1,29 @@
+//@version=6
+indicator("QuantumX Engine", overlay=true)
+enableAlerts = input.bool(true, "Enable Webhook Alerts")
+volumeFactor = input.float(1.5, "Volume Spike Multiplier")
+
+isBullishEngulfing() =>
+    close[1] < open[1] and close > open and close > open[1] and open < close[1]
+isBearishEngulfing() =>
+    close[1] > open[1] and close < open and close < open[1] and open > close[1]
+
+bullOB = isBullishEngulfing()
+bearOB = isBearishEngulfing()
+
+bullHigh = ta.valuewhen(bullOB, high[1], 0)
+bullLow = ta.valuewhen(bullOB, low[1], 0)
+bearHigh = ta.valuewhen(bearOB, high[1], 0)
+bearLow = ta.valuewhen(bearOB, low[1], 0)
+
+isBullCandle = close > open
+isBearCandle = close < open
+vol = volume
+avgVol = ta.sma(volume, 14)
+volSpike = vol > avgVol * volumeFactor
+
+buySignal = close > bullLow and close < bullHigh and isBullCandle and volSpike
+sellSignal = close < bearHigh and close > bearLow and isBearCandle and volSpike
+
+alertcondition(buySignal and enableAlerts, title="QuantumX BUY", message='{"symbol":"BTCUSDT","signal":"BUY","strategy":"order_block","confidence":0.91}')
+alertcondition(sellSignal and enableAlerts, title="QuantumX SELL", message='{"symbol":"BTCUSDT","signal":"SELL","strategy":"order_block","confidence":0.87}')
