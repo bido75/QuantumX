@@ -7,10 +7,13 @@ from datetime import datetime
 app = Flask(__name__)
 
 API_KEY = os.getenv("API_KEY", "YOUR_API_KEY")
-THREE_COMMAS_URL = "https://api.3commas.io/public/api/v2/smart_trades")
-DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")  # Optional
-
+THREE_COMMAS_URL = "https://api.3commas.io/public/api/v2/smart_trades"
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
 LOG_FILE = "quantumx_signals.json"
+
+@app.route('/')
+def home():
+    return 'QuantumX Engine API Running'
 
 @app.route('/webhook/quantumx', methods=['POST'])
 def quantumx_webhook():
@@ -26,7 +29,6 @@ def quantumx_webhook():
     if signal not in ["BUY", "SELL"]:
         return jsonify({"status": "ignored", "reason": "No actionable signal"})
 
-    # Add timestamp to data
     timestamp = datetime.utcnow().isoformat()
     signal_data = {
         "timestamp": timestamp,
@@ -36,11 +38,9 @@ def quantumx_webhook():
         "strategy": strategy
     }
 
-    # Log to file
     with open(LOG_FILE, "a") as f:
         f.write(json.dumps(signal_data) + "\n")
 
-    # Optional: send to Discord
     if DISCORD_WEBHOOK_URL:
         discord_message = {
             "content": f"📈 **QuantumX Signal**\n`{symbol}` → `{signal}` ({confidence*100:.1f}% confidence)\nTime: {timestamp}"
@@ -50,7 +50,6 @@ def quantumx_webhook():
         except Exception as e:
             print(f"[Discord Error] {e}")
 
-    # Simulate 3Commas Trade
     payload = {
         "symbol": symbol,
         "side": signal,
