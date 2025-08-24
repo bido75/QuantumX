@@ -30,3 +30,10 @@ def quantumx_webhook():
     )
 
     return jsonify({"status": "executed", "signal": signal, "symbol": symbol, "response": response.json()})
+
+# ✅ This is required to work on Railway, Replit, Render, etc.
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
