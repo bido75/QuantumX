@@ -1,0 +1,50 @@
+{
+    "users": [
+        {
+            "user_id": "alice_crypto",
+            "name": "Alice",
+            "broker": "binance",
+            "api_key": "BINANCE_API_KEY",
+            "api_secret": "BINANCE_API_SECRET",
+            "assets": [
+                "BTCUSDT",
+                "ETHUSDT"
+            ],
+            "risk_settings": {
+                "risk_per_trade_pct": 2,
+                "max_drawdown_pct": 20
+            }
+        },
+        {
+            "user_id": "bob_stocks",
+            "name": "Bob",
+            "broker": "ibkr",
+            "ibkr_username": "bob_ib",
+            "ibkr_password": "securepass123",
+            "assets": [
+                "AAPL",
+                "TSLA",
+                "SPY"
+            ],
+            "risk_settings": {
+                "risk_per_trade_pct": 1,
+                "max_drawdown_pct": 15
+            }
+        },
+        {
+            "user_id": "carol_forex",
+            "name": "Carol",
+            "broker": "metatrader",
+            "api_key": "MT4_API_KEY",
+            "server": "MetaQuotes-Demo",
+            "assets": [
+                "EURUSD",
+                "GBPJPY"
+            ],
+            "risk_settings": {
+                "risk_per_trade_pct": 1.5,
+                "max_drawdown_pct": 10
+            }
+        }
+    ]
+}
