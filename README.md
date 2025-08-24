@@ -1,11 +1,19 @@
-# QuantumX Trading System
+# QuantumX Backend (Deployable Version)
 
-## Components
-- Pine Script signal engine with OB detection
-- Flask API backend to handle alerts and execute trades
-- Frontend dashboard to view live signals
+This version is pre-structured for deployment to [Render](https://render.com).
 
-## Deployment
-1. Deploy backend using Replit/Render
-2. Use webhook URL in TradingView alert
-3. Set API keys in `.env` file
+## 🚀 How to Deploy
+
+1. Push these files to your GitHub repo
+2. Go to Render > New Web Service
+3. Select your repo, use defaults:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `python app.py`
+4. Set your environment variable in Render:
+   - `API_KEY=your_actual_api_key_here`
+
+Done!
+
+## ⚠️ Note
+- This version places backend files in the root directory.
+- Ideal for Render, Railway, and Replit deployment.

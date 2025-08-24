@@ -1,0 +1,11 @@
+{
+  "strategy": "order_block",
+  "risk_management": {
+    "max_drawdown": 0.05,
+    "percent_risk": 0.02
+  },
+  "trade_settings": {
+    "amount_usd": 100,
+    "leverage": 1
+  }
+}
